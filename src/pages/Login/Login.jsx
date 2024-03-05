@@ -1,14 +1,32 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../../sides/Navbar/Navbar";
+import { useContext } from "react";
+import { UserContext } from "../../provider/UserProvider";
 
 
 const Login = () => {
 
+    const { userSignIn } = useContext(UserContext);
+    const navigate = useNavigate();
+
     const handleLogin = e =>{
         e.preventDefault();
         const form = new FormData(e.currentTarget);
-        console.log(form.get("email"));
+        const email = form.get("email");
+        const password = form.get("password");
+        console.log(email, password);
+
+        userSignIn(email, password)
+        .then(result =>{
+            console.log(result.user);
+            e.target.reset();
+            navigate("/");
+        })
+        .catch(error =>{
+            console.log(error);
+        })
     }
+
 
     return (
         <div>

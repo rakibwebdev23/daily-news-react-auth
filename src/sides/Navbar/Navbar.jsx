@@ -1,13 +1,27 @@
 import { Link } from "react-router-dom";
-import user from "../../assets/images/user.png";
+import userImage from "../../assets/images/user.png";
+import { useContext } from "react";
+import { UserContext } from "../../provider/UserProvider";
 
 const Navbar = () => {
+
+    const { user, userSignOut } = useContext(UserContext);
 
     const navbar = <>
         <li><Link to="/">Home</Link></li>
         <li><Link to="/about">About</Link></li>
         <li><Link to="/career">Career</Link></li>
     </>
+
+    const handleSignOut = () => {
+        userSignOut()
+            .then(() => {
+                console.log("User logout successfully");
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }
 
     return (
         <div className="navbar bg-base-100">
@@ -23,12 +37,24 @@ const Navbar = () => {
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1">
-                   {navbar}
+                    {navbar}
                 </ul>
             </div>
             <div className="navbar-end flex gap-2">
-                <img className="w-9" src={user} alt="" />
-                <Link to="/login"><button className="px-8 py-1 bg-gray-900 text-white">Login</button></Link>
+
+
+                {
+                    user ?
+                        <>
+
+                            <img className="w-9" src={userImage} alt="" />
+                            <button onClick={handleSignOut} className="px-8 py-1 bg-gray-900 text-white">Sign Out</button></> :
+                        <>
+                            <img className="w-9" src={userImage} alt="" />
+                            <Link to="/login"><button className="px-8 py-1 bg-gray-900 text-white">Login</button></Link>
+                        </>
+
+                }
             </div>
         </div>
     );
