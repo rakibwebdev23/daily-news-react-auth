@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Navbar from "../../sides/Navbar/Navbar";
 import { useContext } from "react";
 import { UserContext } from "../../provider/UserProvider";
@@ -7,6 +7,7 @@ import { UserContext } from "../../provider/UserProvider";
 const Login = () => {
 
     const { userSignIn } = useContext(UserContext);
+    const location = useLocation();
     const navigate = useNavigate();
 
     const handleLogin = e =>{
@@ -20,7 +21,7 @@ const Login = () => {
         .then(result =>{
             console.log(result.user);
             e.target.reset();
-            navigate("/");
+            navigate(location?.state ? location.state : "/");
         })
         .catch(error =>{
             console.log(error);

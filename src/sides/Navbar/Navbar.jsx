@@ -11,6 +11,7 @@ const Navbar = () => {
         <li><Link to="/">Home</Link></li>
         <li><Link to="/about">About</Link></li>
         <li><Link to="/career">Career</Link></li>
+        <li><Link to="/register">Register</Link></li>
     </>
 
     const handleSignOut = () => {
